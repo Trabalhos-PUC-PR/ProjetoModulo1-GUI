@@ -46,7 +46,7 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
 def listPasswordMenu():
     passwordSets = cryptMan.getPasswords()
     if(len(passwordSets) == 0):
-        print("you have yet to register a password in the vault!")
+        print("You have yet to register a password in the vault!")
         input("Press enter to continue...")
         vaultMainMenu()
     print("Here are your passwords!\n")
@@ -55,11 +55,12 @@ def listPasswordMenu():
         print(f"#{count}: Site: {password[0]}, Username: {password[1]}, Password: {password[2]}")
         count += 1
     input("\nPress enter to continue...")
+    return len(passwordSets)
 
 def insertPasswordMenu():
     os.system('clear')
-    print("please insert the following information:")
-    site = input("(OPTIONAL) From which site is this password? ")
+    print("Please insert the following information:")
+    site = input("From which site is this password? ")
     user = input("What is your username? ")
     password = input("What is your password? ")
     print(f"""
@@ -75,24 +76,41 @@ def insertPasswordMenu():
         cryptMan.encrypt_and_register_Pass(string)
 
 def deletePasswordMenu():
-    listPasswordMenu()
-    index = int(input("Please select the index that will be deleted: "))
-    fileMan.deletePassword(index)
+    totalPasswords = listPasswordMenu() + 1
+    try:
+        index = int(input("Please select the index that will be deleted (enter to return): "))
+    except ValueError:
+        vaultMainMenu()
+    if(totalPasswords <= index or 1 > index):
+        os.system('clear')
+        print("Invalid index, please try again")
+        deletePasswordMenu()
+    else:
+        fileMan.deletePassword(index)
 
 def editPasswordMenu():
-    listPasswordMenu()
-    index = int(input("Please select the index that will be changed: "))
-    oldPassword = cryptMan.decryptPassword(fileMan.selectPassword(index))
-    updatedPass = oldPassword.split("-")
-    selection = input("What would you like to change? (s/u/p): ")
-    if(selection == 's'):
-        updatedPass[0] = input("Please type the updated site: ")
-    elif(selection == 'u'):
-        updatedPass[1] = input("Please type the updated username: ")
-    elif(selection == 'p'):
-        updatedPass[2] = input("Please type the updated password: ")
-    else:
+    totalPasswords = listPasswordMenu()
+    try:
+        index = int(input("Please select the index that will be changed (enter to return): "))
+    except ValueError:
         vaultMainMenu()
-    updatedPass = updatedPass[0]+"-"+updatedPass[1]+"-"+updatedPass[2]
-    fileMan.insertEntryAt(index, cryptMan.encryptPass(updatedPass))
-    vaultMainMenu()
+
+    if(totalPasswords <= index or 1 > index):
+        os.system('clear')
+        print("Invalid index, please try again")
+        editPasswordMenu()
+    else:
+        oldPassword = cryptMan.decryptPassword(fileMan.selectPassword(index))
+        updatedPass = oldPassword.split("-")
+        selection = input("What would you like to change? (s/u/p): ")
+        if(selection == 's'):
+            updatedPass[0] = input("Please type the updated site: ")
+        elif(selection == 'u'):
+            updatedPass[1] = input("Please type the updated username: ")
+        elif(selection == 'p'):
+            updatedPass[2] = input("Please type the updated password: ")
+        else:
+            vaultMainMenu()
+        updatedPass = updatedPass[0]+"-"+updatedPass[1]+"-"+updatedPass[2]
+        fileMan.insertEntryAt(index, cryptMan.encryptPass(updatedPass))
+        vaultMainMenu()

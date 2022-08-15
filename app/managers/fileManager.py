@@ -58,6 +58,6 @@ def checkFileSetup():
         if(isNewSetup()):
             setup()
     except FileNotFoundError:
-        print("NO STORAGE FILE FOUND, BEGGINING SETUP!")
+        print("No storage file found! Beggining setup!")
         open(filePath, "w")
         setup()
