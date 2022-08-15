@@ -2,7 +2,7 @@ from managers.fileManager import *
 from managers.cryptManager import *
 from vault import *
 
-filePath = "./storage/storage1.txt"
+filePath = "./storage/storage.txt"
 
 def main():
     os.system('clear')

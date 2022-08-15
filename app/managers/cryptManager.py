@@ -26,6 +26,11 @@ def encrypt_and_register_Pass(password):
     hashedPass = aesInstance.encrypt(password)
     fileMan.addNewPassword(hashedPass)
 
+def encryptPass(password):
+    global passKey
+    aesInstance = AESCipher(passKey)
+    return aesInstance.encrypt(password)
+
 def decryptPassword(hashedPass):
     global passKey
     aesInstance = AESCipher(passKey)

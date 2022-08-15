@@ -1,4 +1,5 @@
 import os
+from turtle import update
 import managers.fileManager as fileMan
 import managers.cryptManager as cryptMan
 
@@ -16,6 +17,7 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
     \_/    \__|  \__| \______/ \________|\__|       \__|    
                                                           
     """)
+    print("                 Your one and only password vault in python\n")
     print("What would you like to do today?\n")
     print("l - List passwords!")
     print("i - Insert a new password!")
@@ -33,7 +35,8 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
         deletePasswordMenu()
         vaultMainMenu()
     elif(selection == 'e'):
-        ...
+        editPasswordMenu()
+        vaultMainMenu()
     elif(selection == 'x'):
         print("Exiting the app! Come back soon!")
         exit()
@@ -75,3 +78,21 @@ def deletePasswordMenu():
     listPasswordMenu()
     index = int(input("Please select the index that will be deleted: "))
     fileMan.deletePassword(index)
+
+def editPasswordMenu():
+    listPasswordMenu()
+    index = int(input("Please select the index that will be changed: "))
+    oldPassword = cryptMan.decryptPassword(fileMan.selectPassword(index))
+    updatedPass = oldPassword.split("-")
+    selection = input("What would you like to change? (s/u/p): ")
+    if(selection == 's'):
+        updatedPass[0] = input("Please type the updated site: ")
+    elif(selection == 'u'):
+        updatedPass[1] = input("Please type the updated username: ")
+    elif(selection == 'p'):
+        updatedPass[2] = input("Please type the updated password: ")
+    else:
+        vaultMainMenu()
+    updatedPass = updatedPass[0]+"-"+updatedPass[1]+"-"+updatedPass[2]
+    fileMan.insertEntryAt(index, cryptMan.encryptPass(updatedPass))
+    vaultMainMenu()

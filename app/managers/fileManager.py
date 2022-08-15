@@ -16,6 +16,21 @@ def deletePassword(index):
     del allLines[index]
     file.writelines(allLines)
 
+def selectPassword(index):
+    file = open(filePath, "r")
+    allLines = file.readlines()
+    file.close()
+    return allLines[index]
+
+def insertEntryAt(index, entry):
+    file = open(filePath, "r")
+    allLines = file.readlines()
+    file.close()
+    file = open(filePath, "w")
+    allLines[index] = entry.decode()
+    file.writelines(allLines)
+
+
 def isNewSetup():
     file = open(filePath, 'r')
     lines = file.readlines()
