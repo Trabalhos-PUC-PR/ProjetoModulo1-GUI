@@ -1,8 +1,8 @@
-from getpass import getuser
-from cryptManager import encryptKey, encryptKeyPrintable
+from managers.cryptManager import encryptKeyPrintable
+from main import filePath
 
-
-filePath = "./storage/storage1.txt"
+user = ""
+passKey = ""
 
 def getPasswordSet():
     file = open(filePath, "r")
@@ -45,7 +45,7 @@ def setup():
     file.write(authHash)
     file.close()
     
-    print("Please run this program again to begin saving your passowords!")
+    print("User setup complete! Please run this program again!")
     input()
     exit()
 
@@ -60,4 +60,15 @@ def checkFileSetup():
         open(filePath, "w")
         setup()
 
-# print(getPasswordSet())
+def getCurrentUserAuth():
+    global user, passKey
+    print("Type your username: ", end="")
+    user = input()
+    print("Type your password (len>=8): ", end="")
+    passKey = input()
+    if(len(passKey) < 8):
+        print("Password of invalid length! (less than 8 characters)")
+        exit()
+    key = (user+passKey).encode()
+    passKey = encryptKeyPrintable(passKey.encode())
+    return encryptKeyPrintable(key)
