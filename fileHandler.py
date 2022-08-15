@@ -1,7 +1,7 @@
-import os
-import struct
+# import os
+# import struct
 from Cryptodome.Hash import SHA256
-from Cryptodome.Cipher import AES
+# from Cryptodome.Cipher import AES
 
 storagePath = "./storage/storage1.txt"
 
@@ -15,17 +15,17 @@ def main():
     shaInstance.update(key)
     encryptedKey = shaInstance.digest()
 
-    AESinstance = AES.new(encryptedKey, AES.MODE_EAX)
+    # AESinstance = AES.new(encryptedKey, AES.MODE_EAX)
     
-    fileSize = os.path.getsize(storagePath)
-    print(fileSize)
+    # fileSize = os.path.getsize(storagePath)
+    # print(fileSize)
 
-    with open(storagePath, 'w') as file:
-        file.write(struct.pack('<Q', fileSize))
+    # with open(storagePath, 'w') as file:
+    #     file.write(struct.pack('<Q', fileSize))
 
-        size = 2048
+    #     size = 2048
 
-        
+
 
 
 if (__name__ == "__main__"):
