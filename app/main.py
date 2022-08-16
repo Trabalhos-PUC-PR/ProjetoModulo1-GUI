@@ -4,7 +4,7 @@ from getpass import getpass
 from vault import *
 import time
     
-filePath = "./storage/storage.txt"
+filePath = "../storage/storage.txt"
 
 def main():
     os.system('clear')
