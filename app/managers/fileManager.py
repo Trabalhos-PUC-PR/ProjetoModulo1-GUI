@@ -2,6 +2,19 @@ from managers.cryptManager import encryptKeyPrintable
 from main import filePath
 from getpass import getpass
 
+def clearPasswords():
+    file = open(filePath, "r")
+    allLines = file.readlines()
+    file.close()
+    file = open(filePath, "w")
+    length = len(allLines)-1
+    cont = 1
+    while(cont != length):
+        del allLines[cont]
+        cont += 1
+    file.close()
+
+
 def addNewPassword(hashedPass):
     file = open(filePath, "a")
     file.write("\n")

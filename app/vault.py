@@ -59,7 +59,12 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
         vaultMainMenu()
 
 def listPasswordMenu():
-    passwordSets = cryptMan.getPasswords()
+    try:
+        passwordSets = cryptMan.getPasswords()
+    except Exception:
+        print("Some of your passwords are corrupted, and cannot be loaded")
+        fileMan.clearPasswords()
+        exit()
     if(len(passwordSets) == 0):
         print("You have yet to register a password in the vault!")
         time.sleep(2)
