@@ -1,6 +1,7 @@
 from managers.fileManager import *
 from managers.cryptManager import *
 from vault import *
+import time
 
 filePath = "./storage/storage.txt"
 
@@ -13,6 +14,7 @@ def main():
         vaultMainMenu()
     else:
         print("Wrong user or password!")
+        time.sleep(2)
         exit()
 
 if (__name__ == "__main__"):

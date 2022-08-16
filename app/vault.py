@@ -1,6 +1,8 @@
 import os
 import managers.fileManager as fileMan
 import managers.cryptManager as cryptMan
+import time
+import main as main
 
 def vaultMainMenu():
     os.system('clear')
@@ -22,6 +24,7 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
     print("i - Insert a new password!")
     print("d - Delete an existing password!")
     print("e - Edit an existing password!")
+    print("n - Delete current user and every password saved inside!")
     print("x - Exit the application!\n")
     selection = input("Please, select an option: ")
     if(selection == 'l'):
@@ -36,8 +39,20 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
     elif(selection == 'e'):
         editPasswordMenu()
         vaultMainMenu()
+    elif(selection == 'n'):
+        print("Are you sure?? every password you've saved to this point will be LOST!")
+        are_you_sure = input("Are you really, really sure? (y, default = no): ")
+        if(are_you_sure != 'y'):
+            vaultMainMenu()
+        else:
+            open(main.filePath, "w").write("")
+            print("Exiting the app! Come back again!")
+            time.sleep(2)
+            os.system('clear')
+            exit()
     elif(selection == 'x'):
         print("Exiting the app! Come back soon!")
+        time.sleep(2)
         os.system('clear')
         exit()
     else:
@@ -47,7 +62,7 @@ def listPasswordMenu():
     passwordSets = cryptMan.getPasswords()
     if(len(passwordSets) == 0):
         print("You have yet to register a password in the vault!")
-        input("Press enter to continue...")
+        time.sleep(2)
         vaultMainMenu()
     print("Here are your passwords!\n")
     count = 1
