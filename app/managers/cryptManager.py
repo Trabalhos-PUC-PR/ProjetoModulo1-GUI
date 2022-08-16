@@ -1,6 +1,15 @@
+import os
 from stat import filemode
-from Cryptodome.Hash import SHA256
-from Cryptodome.Cipher import AES
+try:
+    from Cryptodome.Hash import SHA256
+    from Cryptodome.Cipher import AES
+except ModuleNotFoundError:
+    os.system('clear')
+    print("It appears you do not have the pycryptodomex module installed!")
+    print("Please run 'pip install pycryptodomex' and try again!")
+    input("Press enter to exit...")
+    exit()
+
 from AESCipher import AESCipher
 import managers.fileManager as fileMan
 from main import filePath

@@ -5,7 +5,7 @@ An CLI password vault made in python
 
 ### Dependencies:
  To run this project, you need to have installed:
- - [PyCryptoDome](https://pypi.org/project/pycryptodome/)
+ - [PyCryptoDomex](https://pypi.org/project/pycryptodomex/)
 
 ### How to run:
  - Clone this repository;  

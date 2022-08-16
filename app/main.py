@@ -3,7 +3,7 @@ import managers.cryptManager as cryptMan
 from getpass import getpass
 from vault import *
 import time
-
+    
 filePath = "./storage/storage.txt"
 
 def main():
