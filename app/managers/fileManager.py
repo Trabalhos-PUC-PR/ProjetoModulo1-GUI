@@ -14,6 +14,9 @@ def deletePassword(index):
     file.close()
     file = open(filePath, "w")
     del allLines[index]
+    index = len(allLines)
+    if(index == 1):
+        allLines[index-1] = allLines[index-1].strip()
     file.writelines(allLines)
 
 def selectPassword(index):

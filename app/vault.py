@@ -1,5 +1,4 @@
 import os
-from turtle import update
 import managers.fileManager as fileMan
 import managers.cryptManager as cryptMan
 
@@ -39,6 +38,7 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
         vaultMainMenu()
     elif(selection == 'x'):
         print("Exiting the app! Come back soon!")
+        os.system('clear')
         exit()
     else:
         vaultMainMenu()
@@ -89,7 +89,7 @@ def deletePasswordMenu():
         fileMan.deletePassword(index)
 
 def editPasswordMenu():
-    totalPasswords = listPasswordMenu()
+    totalPasswords = listPasswordMenu() + 1
     try:
         index = int(input("Please select the index that will be changed (enter to return): "))
     except ValueError:
