@@ -60,11 +60,21 @@ $$ |   $$ |$$ /  $$ |$$ |  $$ |$$ |      $$ |    \$$\ $$  /
 
 def listPasswordMenu():
     try:
-        passwordSets = cryptMan.getPasswords()
+        passwordSets = fileMan.getPasswords()
     except Exception:
-        print("Some of your passwords are corrupted, and cannot be loaded")
-        fileMan.clearPasswords()
-        exit()
+        print("Some of your passwords are corrupted, or have been tampered with, and cannot be loaded")
+        selection = input("Do you want this program to delete the corrupt entry? (y/n default = n): ")
+        if(selection == 'y'):
+            index = fileMan.getCorruptLine()
+            while(index != 0):
+                fileMan.deletePassword(index)
+                index = fileMan.getCorruptLine()
+            
+            input()
+            vaultMainMenu()
+        else:
+            vaultMainMenu()
+        
     if(len(passwordSets) == 0):
         print("You have yet to register a password in the vault!")
         time.sleep(2)
@@ -88,10 +98,10 @@ def insertPasswordMenu():
     User: {user}
     Password: {password} 
     """)
-    selection = input("Is this correct? (y/n): ")
+    selection = input("Is this correct? (y/n default=y): ")
     if(selection == 'n'):
         ...
-    elif(selection == 'y'):
+    else:
         string = site+"-"+user+"-"+password
         cryptMan.encrypt_and_register_Pass(string)
 
@@ -132,5 +142,5 @@ def editPasswordMenu():
         else:
             vaultMainMenu()
         updatedPass = updatedPass[0]+"-"+updatedPass[1]+"-"+updatedPass[2]
-        fileMan.insertEntryAt(index, cryptMan.encryptPass(updatedPass))
+        fileMan.editEntryAt(index, cryptMan.encryptPassword(updatedPass))
         vaultMainMenu()
