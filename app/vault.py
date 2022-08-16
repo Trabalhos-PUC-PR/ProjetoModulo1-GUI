@@ -63,14 +63,12 @@ def listPasswordMenu():
         passwordSets = fileMan.getPasswords()
     except Exception:
         print("Some of your passwords are corrupted, or have been tampered with, and cannot be loaded")
-        selection = input("Do you want this program to delete the corrupt entry? (y/n default = n): ")
+        selection = input("Do you want this program to delete all corrupt entries? (y/n default = n): ")
         if(selection == 'y'):
             index = fileMan.getCorruptLine()
             while(index != 0):
                 fileMan.deletePassword(index)
                 index = fileMan.getCorruptLine()
-            
-            input()
             vaultMainMenu()
         else:
             vaultMainMenu()
